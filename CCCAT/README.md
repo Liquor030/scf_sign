@@ -1,4 +1,5 @@
 # CCCAT 签到
+> 11
 ## 创建空白函数
 
 在[腾讯云函数](https://console.cloud.tencent.com/scf/index/1)中，选择**中国香港**，创建**py2.7**的空白函数
