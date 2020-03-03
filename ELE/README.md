@@ -1,6 +1,5 @@
 # ELE 签到
-> 低调使用，低调使用，低调使用  
-> 重要的事说三遍
+> 仅供测试使用
 
 ## 创建空白函数
 
@@ -12,7 +11,10 @@
 #### cookie
 ```
 ********* 替换为 ele的cookie中的SID
+例如: 'Cookie': '*********'   ====>>>  'Cookie': 'SID=idILJZ3dheH8snCM9yXaNaMr1MUXilkEx7uA27'
+
 &&&&&&&&& 替换为 ele的cookie中的USERID
+例如:  USERID = '&&&&&&&&&'   ====>>>   USERID = '6121880385'
 ```
 
 #### 以下这些功能不需要可以自行注释掉  
