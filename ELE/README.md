@@ -9,6 +9,14 @@
 复制ele.py中的内容，填入函数代码，点击**保存**。
 
 #### cookie
+##### 获取
+1.打开 https://h5.ele.me/profile/ 
+
+2.[教程](http://www.cnplugins.com/tool/check-cookie.html) 
+
+3.找到ele.me下的 **SID** 和 **USERID** 
+
+##### 替换
 ```
 ********* 替换为 ele的cookie中的SID
 例如: 'Cookie': '*********'   ====>>>  'Cookie': 'SID=idILJZ3dheH8snCM9yXaNaMr1MUXilkEx7uA27'
