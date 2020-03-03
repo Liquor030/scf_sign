@@ -10,7 +10,7 @@
 
 #### cookie
 ##### 获取
-1.打开 https://h5.ele.me/profile/ 
+1.打开 https://h5.ele.me/profile/ 并登陆需要签到的账号
 
 2.[教程](http://www.cnplugins.com/tool/check-cookie.html) 
 
