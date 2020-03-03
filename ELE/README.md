@@ -3,10 +3,10 @@
 
 ## 创建空白函数
 
-在[腾讯云函数](https://console.cloud.tencent.com/scf/index/1)中，新建建**py2.7**的空白函数，创建完毕后 函数配置-超时时间-10秒
+在[腾讯云函数](https://console.cloud.tencent.com/scf/index/1)中，新建**py2.7**的**空白函数**，创建完毕后 函数配置-超时时间-**10秒**
 
 ## 签到函数
-复制ele.py中的内容，填入函数代码，点击保存。
+复制ele.py中的内容，填入函数代码，点击**保存**。
 
 #### cookie
 ```
