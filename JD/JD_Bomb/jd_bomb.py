@@ -23,11 +23,11 @@ def start():
         d_time = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d")+bomb_state_json["data"]["result"]["timeStart"], '%Y-%m-%d%H:%M')+datetime.timedelta(hours=-8)
         if  d_time.minute - datetime.datetime.now().minute == 1:
             while datetime.datetime.now() < d_time+datetime.timedelta(seconds=-2):
-                logging.warning(datetime.datetime.now())
+                logging.warning(datetime.datetime.now()+datetime.timedelta(hours=8))
                 time.sleep(1)
             while datetime.datetime.now() > d_time+datetime.timedelta(seconds=-2) and datetime.datetime.now() < d_time+datetime.timedelta(seconds=2):
                 bomb = requests.post('https://api.m.jd.com/client.action?functionId=cakebaker_pk_getCakeBomb', data=bomb_body, headers=bomb_headers).text
-                logging.warning(datetime.datetime.now())
+                logging.warning(datetime.datetime.now()+datetime.timedelta(hours=8))
                 logging.warning('京东炸弹:'+bomb)
                 if '成功' in bomb:
                     s = json.loads(bomb)
@@ -38,10 +38,10 @@ def start():
                     logging.warning('成功')
                     break
         else:
-            logging.warning(datetime.datetime.now())
+            logging.warning(datetime.datetime.now()+datetime.timedelta(hours=8))
             logging.warning('非活动时间！')
     else:
-        logging.warning(datetime.datetime.now())
+        logging.warning(datetime.datetime.now()+datetime.timedelta(hours=8))
         logging.warning('非活动时间！')
 
 def main_handler(event, context):
