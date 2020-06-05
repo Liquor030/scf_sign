@@ -21,7 +21,8 @@ def start():
     if 'timeStart' in bomb_state:
         bomb_state_json = json.loads(bomb_state)
         d_time = datetime.datetime.strptime(datetime.datetime.now().strftime("%Y-%m-%d")+bomb_state_json["data"]["result"]["timeStart"], '%Y-%m-%d%H:%M')+datetime.timedelta(hours=-8)
-        if  d_time.minute - datetime.datetime.now().minute == 1:
+        logging.warning('距离开始时间还有: '+str((d_time-datetime.datetime.now()).seconds)+'秒')
+        if  (d_time-datetime.datetime.now()).seconds <= 60:
             while datetime.datetime.now() < d_time+datetime.timedelta(seconds=-2):
                 logging.warning(datetime.datetime.now()+datetime.timedelta(hours=8))
                 time.sleep(1)
