@@ -10,6 +10,7 @@ reload(sys)
 sys.setdefaultencoding('utf8')
 
 def start():
+    Bark_key = '@@@@@@@@@'
     bomb_headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         'cookie': 'pt_key=*********; pt_pin=#########;',
@@ -35,12 +36,15 @@ def start():
                     msg = urllib.quote(str(s["data"]["result"]["tip"]))
                     groupLevel = urllib.quote(str(s["data"]["result"]["groupLevel"]))
                     opponentLevel = urllib.quote(str(s["data"]["result"]["opponentLevel"]))
-                    requests.get('https://api.day.app/@@@@@@@@@/JD_Bomb/'+msg+'%0a%e6%88%98%e5%86%b5%ef%bc%9a'+groupLevel+'+VS+'+opponentLevel)
+                    requests.get('https://api.day.app/'+Bark_key+'/JD_Bomb/'+msg+'%0a%e6%88%98%e5%86%b5%ef%bc%9a'+groupLevel+'+VS+'+opponentLevel)
                     logging.warning('成功')
                     break
         else:
             logging.warning(datetime.datetime.now()+datetime.timedelta(hours=8))
             logging.warning('非活动时间！')
+    elif '登陆失败' in bomb_state:
+        requests.get('https://api.day.app/'+Bark_key+'/JD_Bomb/%e7%99%bb%e9%99%86%e5%a4%b1%e8%b4%a5%ef%bc%8cCookie%e5%b7%b2%e5%a4%b1%e6%95%88%ef%bc%81')
+        logging.warning('Cookie已失效！')
     else:
         logging.warning(datetime.datetime.now()+datetime.timedelta(hours=8))
         logging.warning('非活动时间！')
