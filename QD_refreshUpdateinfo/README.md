@@ -16,8 +16,8 @@
 将 ######### 替换为 IOS上的《Bark》app属于自己的Bark_key  
    
 将 ids 中的内容替换为需要获取更新通知的起点书籍id（可添加多本书）   
-   例如:"https://book.qidian.com/info/1018027842"
-        ==>  ids = [1018027842];
+   例如:"https://book.qidian.com/info/1018027842" 与 "https://book.qidian.com/info/1016572786"
+        ==>  ids = [1018027842, 1016572786];
 ```  
   
 替换完后点击**保存**，并测试。
