@@ -6,7 +6,6 @@ exports.main_handler = async (event, context, callback) => {
 
     function refreshUpdateinfo(id) {
         let time = new Date().getTime() - 60000;
-        console.log('http://druid.if.qidian.com/Atom.axd/Api/Book/GetChapterList?BookId=' + id + '&timeStamp=' + time);
         fetch('http://druid.if.qidian.com/Atom.axd/Api/Book/GetChapterList?BookId=' + id + '&timeStamp=' + time)
             .then(res => res.json())
             .then(json => {
