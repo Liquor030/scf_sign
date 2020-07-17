@@ -1,6 +1,7 @@
 'use strict';
 exports.main_handler = async (event, context, callback) => {
     const fetch = require('node-fetch');
+    const rate = 60; // 注意: 更改此项需要配合正确的定时触发使用，默认60秒。
     const ids = [1018027842]; // 填入需要获取更新通知的起点书籍id
     const Bark_Key = "#########"; // 填入你自己的Bark_Key
 
@@ -29,9 +30,9 @@ exports.main_handler = async (event, context, callback) => {
     }
 
     var time = new Date().getTime();
-    time -= (time % (60000) + 60000);
-    console.log("refresh_timeStamp: "+time);
-    
+    time -= (time % (rate * 1000) + rate * 1000);
+    console.log("refresh_timeStamp: " + time);
+
     for (let i = 0; i < ids.length; i++) {
         refreshUpdateinfo(ids[i]);
     }
