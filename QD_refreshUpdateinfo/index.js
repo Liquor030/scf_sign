@@ -5,7 +5,6 @@ exports.main_handler = async (event, context, callback) => {
     const Bark_Key = "#########"; // 填入你自己的Bark_Key
 
     function refreshUpdateinfo(id) {
-        let time = new Date().getTime() - 60000;
         fetch('http://druid.if.qidian.com/Atom.axd/Api/Book/GetChapterList?BookId=' + id + '&timeStamp=' + time)
             .then(res => res.json())
             .then(json => {
@@ -29,6 +28,10 @@ exports.main_handler = async (event, context, callback) => {
             .then(json => console.log(json.message));
     }
 
+    var time = new Date().getTime();
+    time -= (time % (60000) + 60000);
+    console.log("refresh_timeStamp: "+time);
+    
     for (let i = 0; i < ids.length; i++) {
         refreshUpdateinfo(ids[i]);
     }
