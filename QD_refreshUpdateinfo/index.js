@@ -15,7 +15,7 @@ exports.main_handler = async (event, context, callback) => {
                 if (json.Result == 0) {
                     let obj = json.Data.LastVipChapterUpdateTime ? 'LastVip' : 'Last';
                     let DiffTime = now - json.Data[obj+'ChapterUpdateTime']
-                    if (DiffTime <= rate && DiffTime > 0)
+                    if (DiffTime <= (rate * 1000) && DiffTime > 0)
                     {
                         console.log(json.Data.BookName + ': ' + json.Data[obj+'UpdateChapterName']);
                         Push(json.Data.BookName, json.Data.Author, json.Data[obj+'UpdateChapterName'], Bark_Key);
