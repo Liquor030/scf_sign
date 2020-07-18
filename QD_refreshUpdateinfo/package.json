@@ -1,5 +1,6 @@
 {
-    "dependencies": {
-    "node-fetch": "2.6.0"
+  "dependencies": {
+    "node-fetch": "2.6.0",
+    "tencentcloud-sdk-nodejs": "3.0.211"
   }
 }
