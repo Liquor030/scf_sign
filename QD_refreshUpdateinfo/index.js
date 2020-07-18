@@ -9,7 +9,7 @@ exports.main_handler = async (event, context, callback) => {
     /////////////////////////////
 
     function refreshUpdateinfo(id) {
-        fetch('http://druid.if.qidian.com/Atom.axd/Api/Book/GetChapterList?BookId=' + id + '&timeStamp=' + now)
+        fetch('http://druid.if.qidian.com/Atom.axd/Api/Book/GetChapterList?BookId=' + id + '&timeStamp=253402185599000')
             .then(res => res.json())
             .then(json => {
                 if (json.Result == 0) {
