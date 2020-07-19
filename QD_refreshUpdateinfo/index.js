@@ -22,23 +22,29 @@ exports.main_handler = async (event, context, callback) => {
             .then(res => res.json())
             .then(json => {
                 if (json.Result == 0) {
+                    let BookName = json.Data.BookName;
+                    let Author = json.Data.Author;
                     let obj = json.Data.LastVipUpdateChapterId ? 'LastVip' : 'Last';
-                    console.log('\n' + id + '_' + json.Data.BookName + '_更新时间: ' + json.Data[obj + 'ChapterUpdateTime']);
-                    if (process.env['bid_' + id] == undefined) {
-                        console.log('\n' + json.Data.BookName + '_更新章节: ' + json.Data[obj + 'UpdateChapterName']);
-                        Bark(json.Data.BookName, json.Data.Author, json.Data[obj + 'UpdateChapterName'], Bark_Key);
-                        refreshVariables(id, json.Data[obj + 'UpdateChapterId']);
-                        flag = 1;
-                    } else {
-                        if (process.env['bid_' + id] == json.Data[obj + 'UpdateChapterId']) {
-                            console.log('\n' + json.Data.BookName + ': 暂无更新');
-                            refreshVariables(id, json.Data[obj + 'UpdateChapterId']);
+                    let new_cid = json.Data[obj + 'UpdateChapterId'];
+                    let UpdateChapterName = json.Data[obj + 'UpdateChapterName'];
+                    console.log('\n' + id + '_' + BookName + '_更新时间: ' + json.Data[obj + 'ChapterUpdateTime']);
+                    if (typeof process.env['bid_' + id] !== "undefined") {
+                        let old_cid = process.env['bid_' + id];
+                        console.log('\n' + id + '_' + BookName + '_old_cid= ' + old_cid);
+                        if (old_cid >= new_cid) {
+                            console.log('\n' + BookName + ': 暂无更新');
+                            refreshVariables(id, old_cid);
                         } else {
-                            console.log('\n' + json.Data.BookName + '_更新章节: ' + json.Data[obj + 'UpdateChapterName']);
-                            Bark(json.Data.BookName, json.Data.Author, json.Data[obj + 'UpdateChapterName'], Bark_Key);
-                            refreshVariables(id, json.Data[obj + 'UpdateChapterId']);
-                            flag = 1;
+                            console.log('\n' + BookName + '_更新章节: ' + UpdateChapterName + '_' + new_cid);
+                            Bark(BookName, Author, UpdateChapterName, Bark_Key);
+                            refreshVariables(id, new_cid);
+                            flag = 0;
                         }
+                    } else {
+                        Bark(BookName, Author, UpdateChapterName, Bark_Key);
+                        refreshVariables(id, new_cid);
+                        console.log('\n添加成功！ ' + BookName + '_更新章节: ' + UpdateChapterName + '_' + new_cid);
+                        flag = 0;
                     }
                 } else {
                     console.log('\n' + 'id_' + id + ':' + json.Message);
@@ -55,9 +61,9 @@ exports.main_handler = async (event, context, callback) => {
     function refreshVariables(bookId, LastUpdateChapterID) {
         let book = {
             Key: 'bid_' + bookId,
-            Value: LastUpdateChapterID.toString()
+            Value: LastUpdateChapterID
         }
-        BookInfo.Environment.Variables.push(book)
+        BookInfo.Environment.Variables.push(book);
     }
 
     function refreshEnvironment() {
@@ -89,15 +95,15 @@ exports.main_handler = async (event, context, callback) => {
     async function main() {
         await _refreshUpdateinfo();
         if (flag) {
-            refreshEnvironment();
+            console.log('\n' + '所有书籍均无更新！');
         } else {
-            console.log('\n' + '所有书籍均无更新！')
+            refreshEnvironment();
         }
     }
 
-    var flag = 0;
-    var BookInfo = JSON.parse('{\"FunctionName\":\"' + FunctionName + '\",\"Environment\":{\"Variables\":[]}}')
+    var flag = 1;
+    var BookInfo = JSON.parse('{\"FunctionName\":\"' + FunctionName + '\",\"Environment\":{\"Variables\":[]}}');
     main();
 
-    return 1
+    return 1;
 };
