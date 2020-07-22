@@ -20,12 +20,9 @@
 将 &&&&&&&&& 替换为 函数配置 - 函数名称  
 
 将 ¥¥¥¥¥¥¥¥¥ 替换为创建函数时选择的地域所对应的取值，详细参考下方的地域对应表
-   
-将 ids 中的内容替换为需要获取更新通知的起点书籍id（可添加多本书）   
-   例如:"https://book.qidian.com/info/1018027842" 与 "https://book.qidian.com/info/1016572786"
-        ==>  ids = [1018027842, 1016572786];
-```  
-
+  
+```   
+  
 ### 地域对应表
 |地域|取值|
 |:-:|:-:|
@@ -41,6 +38,18 @@
 |美国西部（硅谷）|`na-siliconvalley`|   
 
 替换完后点击**保存**，并测试。
+
+## 设置更新提醒  
+> 下列两种方法，任选其一  
+- **JSBox**  
+使用脚本Set QD Notice来设置更新提醒  
+[下载 Set QD Notice](https://xteko.com/redir?name=Set+QD+Notice&icon=icon_166.png&version=1.0&author=Liquor030&website=https://github.com/Liquor030/scf_sign/tree/master/QD_refreshUpdateinfo&url=https://raw.githubusercontent.com/Liquor030/scf_sign/master/QD_refreshUpdateinfo/JSBox/SetQDNotice.js)    
+<br/>
+- **环境变量**  
+添加环境变量，函数配置-环境变量  
+`key: BookList`  
+`value: 1017580377,1018027842,1016572786`  *将此处修改为需要提醒的书籍的ID，用','隔开*  
+  
 
 ## 定时触发
 进入创建好的函数，触发管理，添加并选择适合自己的触发方式  
