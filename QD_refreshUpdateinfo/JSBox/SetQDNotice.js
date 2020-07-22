@@ -61,20 +61,16 @@ $ui.render({
             },
             events: {
                 tapped(sender) {
-                    if (listView.data.length != 0) {
-                        let BookArr = [];
-                        for (let i = 0; i < listView.data.length; i++) {
-                            BookArr.push(listView.data[i].content.text)
-                        }
-                        let BookList = BookArr.join(",")
-                        console.log(BookList);
-                        let GetData = {
-                            FunctionName: FunctionName
-                        };
-                        Post("GetFunction", GetData, BookList);
-                    } else {
-                        $ui.toast("请先添加BookId");
+                    let BookArr = [];
+                    for (let i = 0; i < listView.data.length; i++) {
+                        BookArr.push(listView.data[i].content.text)
                     }
+                    let BookList = BookArr.join(",")
+                    console.log(BookList);
+                    let GetData = {
+                        FunctionName: FunctionName
+                    };
+                    Post("GetFunction", GetData, BookList);
                 }
             }
         },
@@ -284,10 +280,9 @@ function Post(Action, JsonBody, BookList) {
                         FunctionName: FunctionName,
                         Environment: {
                             Variables: [{
-                                    Key: "BookList",
-                                    Value: BookList
-                                }
-                            ]
+                                Key: "BookList",
+                                Value: BookList
+                            }]
                         }
                     };
                     for (let i = 0; i < Variables.length; i++) {
