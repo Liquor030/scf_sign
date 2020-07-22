@@ -273,39 +273,41 @@ function Post(Action, JsonBody, BookList) {
         }),
         handler: function (resp) {
             let data = resp.data;
+            console.log(Action);
             if (Action == "GetFunction") {
                 if (data.Response.hasOwnProperty('Error')) {
                     $ui.toast("读取函数配置失败, " + data.Response.Error.Message);
                     console.log("读取函数配置失败, " + data.Response.Error.Message);
                 } else {
                     Variables = data.Response.Environment.Variables;
+                    var UploadData = {
+                        FunctionName: FunctionName,
+                        Environment: {
+                            Variables: [{
+                                    Key: "BookList",
+                                    Value: BookList
+                                }
+                            ]
+                        }
+                    };
                     for (let i = 0; i < Variables.length; i++) {
                         if (Variables[i].Key == "BookInfo") {
-                            BookInfo = JSON.parse(Variables[i].Value);
+                            let BookInfo = JSON.parse(Variables[i].Value);
                             for (var p in BookInfo.QD) {
                                 if (BookList.indexOf(p) == -1) {
                                     delete BookInfo.QD[p];
                                 }
                             }
                             BookInfo = JSON.stringify(BookInfo);
-                            let UploadData = {
-                                FunctionName: FunctionName,
-                                Environment: {
-                                    Variables: [{
-                                            Key: "BookList",
-                                            Value: BookList
-                                        },
-                                        {
-                                            Key: "BookInfo",
-                                            Value: BookInfo
-                                        }
-                                    ]
-                                }
-                            };
+                            Variables_BookInfo = {
+                                Key: "BookInfo",
+                                Value: BookInfo
+                            }
+                            UploadData.Environment.Variables.push(Variables_BookInfo)
                             console.log(BookInfo);
-                            Post("UpdateFunctionConfiguration", UploadData, BookList);
                         }
                     }
+                    Post("UpdateFunctionConfiguration", UploadData, BookList);
                     console.log("读取成功");
                 }
             } else {
