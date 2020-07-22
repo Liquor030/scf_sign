@@ -304,8 +304,10 @@ function Post(Action, JsonBody, BookList) {
                 }
             } else {
                 if (data.Response.hasOwnProperty('Error')) {
+                    $ui.toast("上传失败, " + data.Response.Error.Message);
                     console.log("上传失败, " + data.Response.Error.Message);
                 } else {
+                    $ui.toast("上传成功");
                     console.log("上传成功");
                 }
             }
