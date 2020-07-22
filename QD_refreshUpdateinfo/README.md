@@ -44,7 +44,8 @@
 - **JSBox**  
 使用脚本Set QD Notice来设置更新提醒  
 [下载 Set QD Notice](https://xteko.com/redir?name=Set+QD+Notice&icon=icon_166.png&version=1.0&author=Liquor030&website=https://github.com/Liquor030/scf_sign/tree/master/QD_refreshUpdateinfo&url=https://raw.githubusercontent.com/Liquor030/scf_sign/master/QD_refreshUpdateinfo/JSBox/SetQDNotice.js)    
-<br/>
+<br/>  
+
 - **环境变量**  
 添加环境变量，函数配置-环境变量  
 `key: BookList`  
