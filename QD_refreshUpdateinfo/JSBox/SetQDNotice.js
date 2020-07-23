@@ -72,7 +72,7 @@ $ui.render({
                         BookArr.push(listView.data[i].content.text)
                     }
                     let BookList = BookArr.join(",")
-                    console.log(BookList);
+                    console.log("BookList: "+BookList);
                     let GetData = {
                         FunctionName: FunctionName,
                         Namespace: Namespace
@@ -259,7 +259,8 @@ function Post(Action, JsonBody, BookList) {
     let date = new Date(RequestTimestamp * 1000);
     date = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1 < 10 ? '0' + (date.getUTCMonth() + 1) : date.getUTCMonth() + 1) + '-' + date.getUTCDate();
     let CredentialScope = date + '/scf/tc3_request';
-
+    console.log(Action);
+    console.log("PostBody: " + StrBody);
     $http.post({
         url: "https://" + Host,
         header: {
@@ -276,7 +277,6 @@ function Post(Action, JsonBody, BookList) {
         }),
         handler: function (resp) {
             let data = resp.data;
-            console.log(Action);
             if (Action == "GetFunction") {
                 if (data.Response.hasOwnProperty('Error')) {
                     $ui.toast("读取函数配置失败, " + data.Response.Error.Message);
@@ -307,11 +307,11 @@ function Post(Action, JsonBody, BookList) {
                                 Value: BookInfo
                             }
                             UploadData.Environment.Variables.push(Variables_BookInfo)
-                            console.log(BookInfo);
+                            console.log("BookInfo: "+BookInfo);
                         }
                     }
-                    Post("UpdateFunctionConfiguration", UploadData, BookList);
                     console.log("读取成功");
+                    Post("UpdateFunctionConfiguration", UploadData, BookList);
                 }
             } else {
                 if (data.Response.hasOwnProperty('Error')) {
