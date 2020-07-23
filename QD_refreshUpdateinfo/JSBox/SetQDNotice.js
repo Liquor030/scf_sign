@@ -7,14 +7,16 @@
 */
 
 ////////////// 配置内容 //////////////
-const SecretId = "@@@@@@@@@"; 
+const SecretId = "@@@@@@@@@";
 // 填入腾讯云API密钥
-const SecretKey = "$$$$$$$$$"; 
+const SecretKey = "$$$$$$$$$";
 // https://console.cloud.tencent.com/cam/capi
-const FunctionName = "&&&&&&&&&"; 
+const FunctionName = "&&&&&&&&&";
 // 创建的函数名
-const Region = "¥¥¥¥¥¥¥¥¥"; 
+const Region = "¥¥¥¥¥¥¥¥¥";
 // 地域配置为创建函数时选择的地域，可对照README的地域对应表进行填写
+const Namespace = "default";
+// 命名空间为创建函数时选择的命名空间，默认default
 ////////////////////////////////////
 
 $app.theme = "auto";
@@ -72,7 +74,8 @@ $ui.render({
                     let BookList = BookArr.join(",")
                     console.log(BookList);
                     let GetData = {
-                        FunctionName: FunctionName
+                        FunctionName: FunctionName,
+                        Namespace: Namespace
                     };
                     Post("GetFunction", GetData, BookList);
                 }
@@ -282,6 +285,7 @@ function Post(Action, JsonBody, BookList) {
                     Variables = data.Response.Environment.Variables;
                     var UploadData = {
                         FunctionName: FunctionName,
+                        Namespace: Namespace,
                         Environment: {
                             Variables: [{
                                 Key: "BookList",
