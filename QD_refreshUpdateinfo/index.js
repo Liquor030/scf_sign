@@ -1,10 +1,15 @@
 'use strict';
 ////////////// 配置内容 //////////////
-const Bark_Key = "#########";       // 填入你自己的Bark_Key
-const SecretId = "@@@@@@@@@";       // 填入腾讯云API密钥
-const SecretKey = "$$$$$$$$$";      // https://console.cloud.tencent.com/cam/capi
-const FunctionName = "&&&&&&&&&";   // 创建的函数名称
-const Region = "¥¥¥¥¥¥¥¥¥";         // 地域配置为创建函数时选择的地域，可对照README的地域对应表进行填写
+const Bark_Key = "#########"; 
+// 填入你自己的Bark_Key
+const SecretId = "@@@@@@@@@"; 
+// 填入腾讯云API密钥
+const SecretKey = "$$$$$$$$$"; 
+// https://console.cloud.tencent.com/cam/capi
+const FunctionName = "&&&&&&&&&"; 
+// 创建的函数名称
+const Region = "¥¥¥¥¥¥¥¥¥"; 
+// 地域配置为创建函数时选择的地域，可对照README的地域对应表进行填写
 ////////////// 配置内容 //////////////
 
 const fetch = require('node-fetch');
@@ -65,8 +70,8 @@ exports.main_handler = async (event, context, callback) => {
     function Post(JsonBody) {
         let StrBody = JSON.stringify(JsonBody)
         let RequestTimestamp = Date.parse(new Date()) / 1000;
-        let date = new Date((RequestTimestamp - 28800) * 1000);
-        date = date.getFullYear() + '-' + (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-' + date.getDate();
+        let date = new Date(RequestTimestamp * 1000);
+        date = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1 < 10 ? '0' + (date.getUTCMonth() + 1) : date.getUTCMonth() + 1) + '-' + date.getUTCDate();
         let CredentialScope = date + '/scf/tc3_request';
 
 
