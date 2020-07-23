@@ -72,7 +72,7 @@ $ui.render({
                         BookArr.push(listView.data[i].content.text)
                     }
                     let BookList = BookArr.join(",")
-                    console.log("BookList: "+BookList);
+                    console.log("BookList: " + BookList);
                     let GetData = {
                         FunctionName: FunctionName,
                         Namespace: Namespace
@@ -307,7 +307,7 @@ function Post(Action, JsonBody, BookList) {
                                 Value: BookInfo
                             }
                             UploadData.Environment.Variables.push(Variables_BookInfo)
-                            console.log("BookInfo: "+BookInfo);
+                            console.log("BookInfo: " + BookInfo);
                         }
                     }
                     console.log("读取成功");
