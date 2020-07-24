@@ -399,7 +399,7 @@ function Post(Action, JsonBody, BookList) {
                     $ui.toast("读取函数配置失败, " + data.Response.Error.Message);
                     console.log("读取函数配置失败, " + data.Response.Error.Message);
                 } else {
-                    Variables = data.Response.Environment.Variables;
+                    let Variables = data.Response.Environment.Variables;
                     let BookListStr = JSON.stringify(BookList);
                     var UploadData = {
                         FunctionName: FunctionName,
