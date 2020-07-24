@@ -1,4 +1,4 @@
-# Qidian 检测更新
+# 小说更新提醒
 > 仅供测试使用
 
 ## 创建空白函数
@@ -41,16 +41,52 @@
 
 ## 设置更新提醒  
 > 下列两种方法，任选其一  
-- **JSBox**  
-使用脚本Set QD Notice来设置更新提醒  
-[下载 Set QD Notice](https://xteko.com/redir?name=Set+QD+Notice&icon=icon_166.png&version=1.0&author=Liquor030&website=https://github.com/Liquor030/scf_sign/tree/master/QD_refreshUpdateinfo&url=https://raw.githubusercontent.com/Liquor030/scf_sign/master/QD_refreshUpdateinfo/JSBox/SetQDNotice.js)    
+- **JSBox（推荐使用该方式进行设置）**  
+使用脚本 Set Novel Notice 来设置更新提醒  
+[下载 Set Novel Notice](https://xteko.com/redir?name=Set+Novel+Notice&icon=icon_166.png&version=1.0&author=Liquor030&website=https://github.com/Liquor030/scf_sign/tree/master/QD_refreshUpdateinfo&url=https://raw.githubusercontent.com/Liquor030/scf_sign/master/Novel_Update_Notice/JSBox/SetNovelNotice.js)    
 <br/>  
 
 - **环境变量**  
 添加环境变量，函数配置-环境变量  
-`key: BookList`  
-`value: 1017580377,1018027842,1016572786`  
-将value修改为需要提醒的书籍的ID，用`,`隔开  
+例如下方这个例子，将`key`和`value`分别填入  
+其中`value`需要 [压缩](https://www.bejson.com/json/format/)  后再填入
+```
+key: BookList
+value: 
+{
+    "QDId": [{
+        "title": {
+            "text": "书名"
+        },
+        "content": {
+            "text": "起点书籍的ID"
+        }
+    }],
+    "ZHId": [{
+        "title": {
+            "text": "书名"
+        },
+        "content": {
+            "text": "纵横书籍的ID"
+        }
+    }],
+    "JJId": [{
+        "title": {
+            "text": "书名"
+        },
+        "content": {
+            "text": "晋江书籍的ID"
+        }
+    }, {
+        "title": {
+            "text": "书名"
+        },
+        "content": {
+            "text": "晋江书籍的ID"
+        }
+    }]
+}
+``` 
   
 
 ## 定时触发

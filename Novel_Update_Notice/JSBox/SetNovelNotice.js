@@ -1,7 +1,7 @@
 /*
 设置起点更新提醒
-- 请配合 scf_sign/QD_refreshUpdateinfo 进行使用
-- Github地址（https://github.com/Liquor030/scf_sign/tree/master/QD_refreshUpdateinfo）
+- 请配合 scf_sign/Novel_Update_Notice 进行使用
+- Github地址（https://github.com/Liquor030/scf_sign/tree/master/Novel_Update_Notice）
 
         by Liquor030
 */
@@ -23,19 +23,51 @@ $app.theme = "auto";
 
 $ui.render({
     props: {
-        title: "Set QD Notice"
+        title: "Set Novel Notice"
     },
     views: [{
+            type: "tab",
+            props: {
+                items: ["起点", "纵横", "晋江"],
+                tintColor: $color("#00EEEE")
+            },
+            layout({
+                left,
+                height
+            }, view) {
+                left.top.right.inset(10);
+                height.equalTo(32);
+            },
+            events: {
+                changed(sender) {
+                    switch (sender.items[sender.index]) {
+                        case "起点":
+                            Channel = "QDId";
+                            break;
+                        case "纵横":
+                            Channel = "ZHId";
+                            break;
+                        case "晋江":
+                            Channel = "JJId";
+                            break;
+                    }
+                    listView.data = BookList[Channel];
+                    console.log(Channel);
+                }
+            }
+        }, {
             type: "input",
             props: {
                 placeholder: "Type BookId here..."
             },
             layout({
+                top,
                 left,
                 height,
                 width
             }, view) {
-                left.top.inset(10);
+                top.equalTo($("tab").bottom).offset(10);
+                left.inset(10);
                 height.equalTo(32);
                 width
                     .equalTo(view.super)
@@ -44,7 +76,7 @@ $ui.render({
             },
             events: {
                 returned(sender) {
-                    insertItem(sender.text);
+                    insertItem(sender.text, Channel);
                     sender.blur();
                     sender.text = "";
                 }
@@ -67,12 +99,6 @@ $ui.render({
             },
             events: {
                 tapped(sender) {
-                    let BookArr = [];
-                    for (let i = 0; i < listView.data.length; i++) {
-                        BookArr.push(listView.data[i].content.text)
-                    }
-                    let BookList = BookArr.join(",")
-                    console.log("BookList: " + BookList);
                     let GetData = {
                         FunctionName: FunctionName,
                         Namespace: Namespace
@@ -98,7 +124,7 @@ $ui.render({
                 actions: [{
                     title: "delete",
                     handler(sender, indexPath) {
-                        deleteItem(indexPath);
+                        deleteItem(indexPath, Channel);
                     }
                 }],
                 template: [{
@@ -162,51 +188,142 @@ const Algorithm = "TC3-HMAC-SHA256";
 const SignedHeaders = "content-type;host";
 
 const listView = $("list");
-const BookId = $cache.get("BookId") || [];
-listView.data = BookId;
+const BookList = $cache.get("BookList") || {
+    QDId: [],
+    ZHId: [],
+    JJId: []
+};
 
-function insertItem(id) {
-    $http.request({
-        method: "Get",
-        url: "http://druid.if.qidian.com/Atom.axd/Api/Book/GetChapterList?BookId=" + id + "&timeStamp=253402185599000",
-        handler: function (resp) {
-            let data = resp.data;
-            if (data.Result == 0) {
-                let title = data.Data.BookName;
-                let text = {
-                    title: {
-                        text: title
-                    },
-                    content: {
-                        text: id
-                    }
-                };
-                BookId.unshift(text);
-                listView.insert({
-                    index: 0,
-                    value: text
-                });
-                saveItems();
-            } else {
-                $ui.toast("请输入正确的BookId");
+switch ($("tab").items[$("tab").index]) {
+    case "起点":
+        var Channel = "QDId";
+        break;
+    case "纵横":
+        var Channel = "ZHId";
+        break;
+    case "晋江":
+        Channel = "JJId";
+        break;
+}
+listView.data = BookList[Channel];
+
+
+function insertItem(id, Channel) {
+    if (Channel == "QDId") {
+        console.log("Channel: 起点");
+        $http.get({
+            url: "http://druid.if.qidian.com/Atom.axd/Api/Book/GetChapterList?BookId=" + id + "&timeStamp=253402185599000",
+            handler: function (resp) {
+                let data = resp.data;
+                if (data.Result == 0) {
+                    let title = data.Data.BookName;
+                    let text = {
+                        title: {
+                            text: title
+                        },
+                        content: {
+                            text: id
+                        }
+                    };
+                    BookList.QDId.unshift(text);
+                    listView.insert({
+                        index: 0,
+                        value: text
+                    });
+                    saveItems();
+                } else {
+                    $ui.toast("请输入正确的BookId");
+                }
             }
-        }
-    })
+        })
+    } else if (Channel == "ZHId") {
+        console.log("Channel: 纵横");
+        let sign = "082DE6CF1178736AF28EB8065CDBE5ACapi_key=27A28A4D4B24022E543E&bookId=" + id + "082DE6CF1178736AF28EB8065CDBE5AC";
+        sign = CryptoJS.MD5(sign).toString();
+        $http.post({
+            url: "https://api1.zongheng.com/iosapi/shelf/getLastChapters",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "User-Agent": "ZongHeng/6.2.0"
+            },
+            body: {
+                api_key: "27A28A4D4B24022E543E",
+                bookId: id,
+                sig: sign
+            },
+            handler: function (resp) {
+                let data = resp.data;
+                if (data.result.lastChapterList.length > 0) {
+                    let title = data.result.lastChapterList[0].bookName;
+                    let text = {
+                        title: {
+                            text: title
+                        },
+                        content: {
+                            text: id
+                        }
+                    };
+                    BookList.ZHId.unshift(text);
+                    listView.insert({
+                        index: 0,
+                        value: text
+                    });
+                    saveItems();
+                } else {
+                    $ui.toast("请输入正确的BookId");
+                }
+            }
+        })
+    } else if (Channel == "JJId") {
+        console.log("Channel: 晋江");
+        $http.post({
+            url: "http://android.jjwxc.net/androidapi/getNovelBqInfo",
+            header: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "User-Agent": "JINJIANG-iOS/4.5.2"
+            },
+            body: {
+                novelId: id
+            },
+            handler: function (resp) {
+                let data = resp.data;
+                if (data.hasOwnProperty("message") == 0) {
+                    let title = data.novelName;
+                    let text = {
+                        title: {
+                            text: title
+                        },
+                        content: {
+                            text: id
+                        }
+                    };
+                    BookList.JJId.unshift(text);
+                    listView.insert({
+                        index: 0,
+                        value: text
+                    });
+                    saveItems();
+                } else {
+                    $ui.toast("请输入正确的BookId");
+                }
+            }
+        })
+    }
 }
 
 function deleteItem({
     row
-}) {
-    const text = BookId[row];
-    const index = BookId.indexOf(text);
+}, Channel) {
+    const text = BookList[Channel][row];
+    const index = BookList[Channel].indexOf(text);
     if (index >= 0) {
-        BookId.splice(index, 1);
+        BookList[Channel].splice(index, 1);
         saveItems();
     }
 }
 
 function saveItems() {
-    $cache.set("BookId", BookId);
+    $cache.set("BookList", BookList);
 }
 
 function getCanonicalRequest(Data) {
@@ -283,22 +400,25 @@ function Post(Action, JsonBody, BookList) {
                     console.log("读取函数配置失败, " + data.Response.Error.Message);
                 } else {
                     Variables = data.Response.Environment.Variables;
+                    let BookListStr = JSON.stringify(BookList);
                     var UploadData = {
                         FunctionName: FunctionName,
                         Namespace: Namespace,
                         Environment: {
                             Variables: [{
                                 Key: "BookList",
-                                Value: BookList
+                                Value: BookListStr
                             }]
                         }
                     };
                     for (let i = 0; i < Variables.length; i++) {
                         if (Variables[i].Key == "BookInfo") {
                             let BookInfo = JSON.parse(Variables[i].Value);
-                            for (var p in BookInfo.QD) {
-                                if (BookList.indexOf(p) == -1) {
-                                    delete BookInfo.QD[p];
+                            for (var p in BookInfo) {
+                                for (var k in BookInfo[p]) {
+                                    if (BookListStr.indexOf(k) == -1) {
+                                        delete BookInfo[p][k];
+                                    }
                                 }
                             }
                             BookInfo = JSON.stringify(BookInfo);
