@@ -65,7 +65,8 @@ exports.main_handler = async (event, context, callback) => {
             'Credential=' + SecretId + '/' + CredentialScope + ', ' +
             'SignedHeaders=' + SignedHeaders + ', ' +
             'Signature=' + Signature;
-
+        
+        console.log("\nAuthorization: " + Authorization);
         return Authorization;
     }
 
@@ -73,7 +74,7 @@ exports.main_handler = async (event, context, callback) => {
         let StrBody = JSON.stringify(JsonBody)
         let RequestTimestamp = Date.parse(new Date()) / 1000;
         let date = new Date(RequestTimestamp * 1000);
-        date = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1 < 10 ? '0' + (date.getUTCMonth() + 1) : date.getUTCMonth() + 1) + '-' + date.getUTCDate();
+        date = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1 < 10 ? '0' + (date.getUTCMonth() + 1) : date.getUTCMonth() + 1) + '-' + (date.getUTCDate() < 10 ? '0' + date.getUTCDate() : date.getUTCDate());
         let CredentialScope = date + '/scf/tc3_request';
 
 
