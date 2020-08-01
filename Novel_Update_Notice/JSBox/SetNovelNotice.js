@@ -423,7 +423,7 @@ function Post(Action, JsonBody, BookList) {
                                 }
                             }
                             BookInfo = JSON.stringify(BookInfo);
-                            Variables_BookInfo = {
+                            let Variables_BookInfo = {
                                 Key: "BookInfo",
                                 Value: BookInfo
                             }
