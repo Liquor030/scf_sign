@@ -367,6 +367,7 @@ function getAuthorization(body, RequestTimestamp, Date, CredentialScope) {
         'SignedHeaders=' + SignedHeaders + ', ' +
         'Signature=' + Signature;
 
+    console.log("Authorization: " + Authorization);
     return Authorization;
 }
 
@@ -374,7 +375,7 @@ function Post(Action, JsonBody, BookList) {
     let StrBody = JSON.stringify(JsonBody)
     let RequestTimestamp = Date.parse(new Date()) / 1000;
     let date = new Date(RequestTimestamp * 1000);
-    date = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1 < 10 ? '0' + (date.getUTCMonth() + 1) : date.getUTCMonth() + 1) + '-' + date.getUTCDate();
+    date = date.getUTCFullYear() + '-' + (date.getUTCMonth() + 1 < 10 ? '0' + (date.getUTCMonth() + 1) : date.getUTCMonth() + 1) + '-' + (date.getUTCDate() < 10 ? '0' + date.getUTCDate() : date.getUTCDate());
     let CredentialScope = date + '/scf/tc3_request';
     console.log(Action);
     console.log("PostBody: " + StrBody);
