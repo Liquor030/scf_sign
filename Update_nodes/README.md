@@ -15,8 +15,8 @@
 ```
 url_list = [
     # [订阅链接,生成的gist文件名],
-    ["https://example2.com/xxxxxx", "example1"],
-    ["https://example1.xyz/xxxxxx", "example2"]
+    ["https://example1.com/xxxxxx", "example1"],
+    ["https://example2.xyz/xxxxxx", "example2"]
 ]
 ```
 

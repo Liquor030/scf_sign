@@ -7,8 +7,8 @@ import os
 ############ 配置 ############
 url_list = [
     # [url,file_name],
-    ["https://example2.com/xxxxxx", "example1"],
-    ["https://example1.xyz/xxxxxx", "example2"]
+    ["https://example1.com/xxxxxx", "example1"],
+    ["https://example2.xyz/xxxxxx", "example2"]
 ]
 #############################
 
