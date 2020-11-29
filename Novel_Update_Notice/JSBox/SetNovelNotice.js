@@ -194,12 +194,14 @@ const BookList = $cache.get("BookList") || {
     JJId: []
 };
 
+var Channel = ""
+
 switch ($("tab").items[$("tab").index]) {
     case "起点":
-        var Channel = "QDId";
+        Channel = "QDId";
         break;
     case "纵横":
-        var Channel = "ZHId";
+        Channel = "ZHId";
         break;
     case "晋江":
         Channel = "JJId";
