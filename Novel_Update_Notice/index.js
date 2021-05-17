@@ -137,7 +137,8 @@ exports.main_handler = async (event, context, callback) => {
                         let BookName = json.Data.BookName;
                         let Author = json.Data.Author;
                         let obj = json.Data.LastVipUpdateChapterId ? 'LastVip' : 'Last';
-                        let new_cid = json.Data[obj + 'UpdateChapterId'];
+                        let new_cid_obj = json.Data.LastVipUpdateChapterId ? 'LastVipUpdateChapterId' : 'LastUpdateChapterID';
+                        let new_cid = json.Data[new_cid_obj];
                         let UpdateChapterName = json.Data[obj + 'UpdateChapterName'];
                         console.log('\n(' + id + ')' + BookName + '_更新时间: ' + json.Data[obj + 'ChapterUpdateTime']);
                         refreshVariables(id, BookName, Author, new_cid, UpdateChapterName, "QD")
