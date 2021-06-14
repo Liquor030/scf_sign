@@ -1,7 +1,8 @@
 'use strict';
 ////////////// 配置内容 //////////////
-const Bark_Key = "#########";
+const Bark_Key = ["#########1","#########2"];
 // 填入你自己的Bark_Key
+// 可填入多个bark，通知多个设备
 const SecretId = "@@@@@@@@@";
 // 填入腾讯云API密钥
 const SecretKey = "$$$$$$$$$";
@@ -101,9 +102,11 @@ exports.main_handler = async (event, context, callback) => {
     }
 
     function Bark(BookName, Author, Chapter, Bark_Key) {
-        fetch('https://api.day.app/' + Bark_Key + '/' + encodeURIComponent('《' + BookName + '》') + '/' + encodeURIComponent(Chapter) + '?url=' + encodeURIComponent('iFreeTime://bk/a=' + encodeURIComponent(Author) + '&n=' + encodeURIComponent(BookName) + '&d=0'))
+        for(let j = 0,len=Bark_Key.length; j < len; j++) {
+            fetch('https://api.day.app/' + Bark_Key[j] + '/' + encodeURIComponent('《' + BookName + '》') + '/' + encodeURIComponent(Chapter) + '?url=' + encodeURIComponent('iFreeTime://bk/a=' + encodeURIComponent(Author) + '&n=' + encodeURIComponent(BookName) + '&d=0'))
             .then(res => res.json())
-            .then(json => console.log(json.message));
+            .then(json => console.log(`Bark(${Bark_Key[j]}): ${json.message}`));
+        }
     }
 
     // 更新cid信息
