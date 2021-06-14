@@ -143,7 +143,7 @@ exports.main_handler = async (event, context, callback) => {
                         console.log('\n(' + id + ')' + BookName + '_更新时间: ' + json.Data[obj + 'ChapterUpdateTime']);
                         refreshVariables(id, BookName, Author, new_cid, UpdateChapterName, "QD")
                     } else {
-                        console.log('\n(' + id + ')' + BookName + '_错误: ' + json.Message);
+                        console.log('\n(' + id + ') 错误: ' + json.Message);
                     }
                 })
         } else if (Channel == "ZHId") {
@@ -168,7 +168,7 @@ exports.main_handler = async (event, context, callback) => {
                         console.log('\n(' + id + ')' + BookName + '_更新时间: ' + json.result.updateTime);
                         refreshVariables(id, BookName, Author, new_cid, UpdateChapterName, "ZH")
                     } else {
-                        console.log('\n(' + id + ')' + BookName + '_错误: ' + json.message);
+                        console.log('\n(' + id + ') 错误: ' + json.message);
                     }
                 })
         } else if (Channel == "JJId") {
@@ -187,7 +187,7 @@ exports.main_handler = async (event, context, callback) => {
                         console.log('\n(' + id + ')' + BookName + '_更新时间: ' + json.renewDate);
                         refreshVariables(id, BookName, Author, new_cid, UpdateChapterName, "JJ")
                     } else {
-                        console.log('\n(' + id + ')' + BookName + '_错误: ' + json.message);
+                        console.log('\n(' + id + ') 错误: ' + json.message);
                     }
                 })
         }
