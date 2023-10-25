@@ -1,6 +1,6 @@
 {
   "dependencies": {
     "node-fetch": "2.6.1",
-    "crypto-js": "4.0.0"
+    "crypto-js": "4.2.0"
   }
 }
